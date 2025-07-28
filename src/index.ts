@@ -1,5 +1,8 @@
+import { setUser, readConfig } from "./config";
+
 async function main() {
-  console.log("Hello, world!");
+  await setUser('Mik');
+  console.log(await readConfig());
 }
 
 main();
