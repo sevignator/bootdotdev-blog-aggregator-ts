@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import url from 'node:url';
+import os from 'node:os';
 
 import { convertCamelToSnake, convertSnakeToCamel } from './utils';
 
@@ -33,12 +33,12 @@ export async function readConfig(): Promise<Config> {
   const serializedConfig = JSON.parse(configJSON);
   const config = Object.keys(serializedConfig).reduce((obj, key) => {
     const camelKey = convertSnakeToCamel(key) as keyof Config;
-    const value = serializedConfig[key]
+    const value = serializedConfig[key];
 
     return {
       ...obj,
-      [camelKey]: value
-    }
+      [camelKey]: value,
+    };
   }, {}) as Config;
 
   return config;
@@ -57,8 +57,8 @@ export async function writeConfig(config: Config): Promise<void> {
 
     return {
       ...obj,
-      [snakeKey]: value
-    }
+      [snakeKey]: value,
+    };
   }, {});
 
   await fs.writeFile(configFilePath, JSON.stringify(formattedConfig));
@@ -69,9 +69,7 @@ export async function writeConfig(config: Config): Promise<void> {
  * Gets the path to the `.gatorconfig.json` file from the user's HOME directory.
  */
 function getConfigFilePath(): string {
-  const __filename = url.fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
-  const configFilePath = path.join(__dirname, '../', '.gatorconfig.json');
-
+  const homeDir = os.homedir();
+  const configFilePath = path.join(homeDir, '.gatorconfig.json');
   return configFilePath;
 }

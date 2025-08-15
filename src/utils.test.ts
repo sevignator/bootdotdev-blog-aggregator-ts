@@ -1,5 +1,9 @@
 import { describe, test, expect } from 'vitest';
-import { convertSnakeToCamel, convertCamelToSnake, capitalizeWord } from './utils';
+import {
+  convertSnakeToCamel,
+  convertCamelToSnake,
+  capitalizeWord,
+} from './utils';
 
 describe('convertSnakeToCamel', () => {
   test('converts a snake-case name to camel-case', () => {
