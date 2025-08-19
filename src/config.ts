@@ -1,4 +1,4 @@
-import fs from 'node:fs/promises';
+import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 
@@ -14,22 +14,20 @@ interface Config {
  * Writes a `Config` object to the JSON config file after setting the
  * `current_user_name` field.
  */
-export async function setUser(name: string): Promise<void> {
-  const config = await readConfig();
+export function setUser(name: string): void {
+  const config = readConfig();
   config.currentUserName = name;
 
-  await writeConfig(config);
+  writeConfig(config);
 }
 
 /**
  * @description
  * Reads the JSON config file and returns a `Config` object.
  */
-export async function readConfig(): Promise<Config> {
+export function readConfig(): Config {
   const configFilePath = getConfigFilePath();
-  const configJSON = await fs.readFile(configFilePath, {
-    encoding: 'utf-8',
-  });
+  const configJSON = fs.readFileSync(configFilePath, 'utf-8');
   const serializedConfig = JSON.parse(configJSON);
   const config = Object.keys(serializedConfig).reduce((obj, key) => {
     const camelKey = convertSnakeToCamel(key) as keyof Config;
@@ -49,7 +47,7 @@ export async function readConfig(): Promise<Config> {
  * Writes to the JSON config file, converting key names from camelCase to
  * snake_case in the process.
  */
-export async function writeConfig(config: Config): Promise<void> {
+export function writeConfig(config: Config): void {
   const configFilePath = getConfigFilePath();
   const formattedConfig = Object.keys(config).reduce((obj, key) => {
     const snakeKey = convertCamelToSnake(key);
@@ -61,7 +59,7 @@ export async function writeConfig(config: Config): Promise<void> {
     };
   }, {});
 
-  await fs.writeFile(configFilePath, JSON.stringify(formattedConfig));
+  fs.writeFileSync(configFilePath, JSON.stringify(formattedConfig));
 }
 
 /**
