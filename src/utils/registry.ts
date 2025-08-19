@@ -1,6 +1,5 @@
-import { setUser } from './config';
+import { type CommandHandler } from '@/handlers';
 
-export type CommandHandler = (cmdName: string, ...args: string[]) => void;
 export type CommandsRegistry = Record<string, CommandHandler>;
 
 export function createCommandsRegistry() {
@@ -11,14 +10,14 @@ export function registerCommand(
   registry: CommandsRegistry,
   cmdName: string,
   handler: CommandHandler
-): void {
+) {
   registry[cmdName] = handler;
 }
 
-export function runCommand(
+export async function runCommand(
   registry: CommandsRegistry,
   cmdName: string,
   ...args: string[]
-): void {
-  registry[cmdName](cmdName, ...args);
+): Promise<void> {
+  await registry[cmdName](cmdName, ...args);
 }

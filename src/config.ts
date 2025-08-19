@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 
-import { convertCamelToSnake, convertSnakeToCamel } from './utils';
+import { convertCamelToSnake, convertSnakeToCamel } from '@/utils/text';
 
 interface Config {
   dbUrl: string;

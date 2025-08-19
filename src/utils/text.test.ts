@@ -3,7 +3,7 @@ import {
   convertSnakeToCamel,
   convertCamelToSnake,
   capitalizeWord,
-} from './utils';
+} from './text';
 
 describe('convertSnakeToCamel', () => {
   test('converts a snake-case name to camel-case', () => {
