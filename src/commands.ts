@@ -1,5 +1,10 @@
-import { createUser, getUser, deleteAllUsers } from '@/lib/db/queries/users';
-import { setUser } from '@/config';
+import {
+  createUser,
+  getUser,
+  deleteAllUsers,
+  getAllUsers,
+} from '@/lib/db/queries/users';
+import { setUser, readConfig } from '@/config';
 
 export type CommandHandler = (
   cmdName: string,
@@ -48,4 +53,16 @@ export const loginHandler: CommandHandler = async function (cmdName, ...args) {
 
 export const resetHandler: CommandHandler = async function (cmdName, ...args) {
   await deleteAllUsers();
+};
+
+export const usersHandler: CommandHandler = async function () {
+  const users = await getAllUsers();
+  const loggedInUser = readConfig().currentUserName;
+
+  for (const user of users) {
+    console.log(
+      `* ${user.name}`,
+      loggedInUser === user.name ? '(current)' : ''
+    );
+  }
 };
