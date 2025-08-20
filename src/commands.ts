@@ -5,6 +5,7 @@ import {
   getAllUsers,
 } from '@/lib/db/queries/users';
 import { setUser, readConfig } from '@/config';
+import { fetchFeed } from '@/utils/rss';
 
 export type CommandHandler = (
   cmdName: string,
@@ -51,7 +52,7 @@ export const loginHandler: CommandHandler = async function (cmdName, ...args) {
   console.log(`You are now logged in as "${username}".`);
 };
 
-export const resetHandler: CommandHandler = async function (cmdName, ...args) {
+export const resetHandler: CommandHandler = async function () {
   await deleteAllUsers();
 };
 
@@ -65,4 +66,11 @@ export const usersHandler: CommandHandler = async function () {
       loggedInUser === user.name ? '(current)' : ''
     );
   }
+};
+
+export const aggHandler: CommandHandler = async function (cmdName, ...args) {
+  const [feedURL] = args;
+  // const feed = await fetchFeed(feedURL);
+  const feed = await fetchFeed('https://www.wagslane.dev/index.xml');
+  https: console.log(feed);
 };

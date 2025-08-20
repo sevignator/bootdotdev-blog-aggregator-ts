@@ -1,6 +1,8 @@
 # Build a Blog Aggregator in TypeScript project from Boot.dev
 
-Personal solution to the Build a Blog Aggregator in TypeScript project from Boot.dev.
+Personal solution to the *Build a Blog Aggregator in TypeScript* project from Boot.dev.
+
+This is a CLI program that allows users to fetch RSS feeds and store their content in a PostgreSQL database.
 
 ## Tools
 

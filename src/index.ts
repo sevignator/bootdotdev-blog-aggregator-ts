@@ -8,6 +8,7 @@ import {
   loginHandler,
   resetHandler,
   usersHandler,
+  aggHandler,
 } from '@/commands';
 
 async function main() {
@@ -24,6 +25,7 @@ async function main() {
   registerCommand(commandsRegistry, 'login', loginHandler);
   registerCommand(commandsRegistry, 'reset', resetHandler);
   registerCommand(commandsRegistry, 'users', usersHandler);
+  registerCommand(commandsRegistry, 'agg', aggHandler);
 
   await runCommand(commandsRegistry, cmdName, ...args);
 
