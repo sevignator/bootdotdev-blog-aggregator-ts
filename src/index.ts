@@ -3,7 +3,7 @@ import {
   registerCommand,
   runCommand,
 } from '@/utils/registry';
-import { registerHandler, loginHandler } from '@/handlers';
+import { registerHandler, loginHandler, resetHandler } from '@/commands';
 
 async function main() {
   const [cmdName, ...args] = process.argv.slice(2);
@@ -17,6 +17,7 @@ async function main() {
   // Add commands to the registry.
   registerCommand(commandsRegistry, 'register', registerHandler);
   registerCommand(commandsRegistry, 'login', loginHandler);
+  registerCommand(commandsRegistry, 'reset', resetHandler);
 
   await runCommand(commandsRegistry, cmdName, ...args);
 

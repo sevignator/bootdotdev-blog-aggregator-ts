@@ -1,4 +1,4 @@
-import { createUser, getUser } from '@/lib/db/queries/users';
+import { createUser, getUser, deleteAllUsers } from '@/lib/db/queries/users';
 import { setUser } from '@/config';
 
 export type CommandHandler = (
@@ -44,4 +44,8 @@ export const loginHandler: CommandHandler = async function (cmdName, ...args) {
 
   await setUser(username);
   console.log(`You are now logged in as "${username}".`);
+};
+
+export const resetHandler: CommandHandler = async function (cmdName, ...args) {
+  await deleteAllUsers();
 };
