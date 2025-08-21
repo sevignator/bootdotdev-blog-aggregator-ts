@@ -6,9 +6,11 @@
   "main": "index.js",
   "scripts": {
     "start": "tsx ./src/index.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
-  "keywords": [],
+  "keywords": [ ],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.15.0",
