@@ -1,5 +1,6 @@
-import { desc } from 'drizzle-orm';
 import { XMLParser } from 'fast-xml-parser';
+
+import { type User, type Feed } from '@/lib/db/schema';
 
 export type RSSFeed = {
   channel: {
@@ -59,4 +60,9 @@ export async function fetchFeed(feedURL: string) {
     description,
     item,
   };
+}
+
+export async function printFeed(feed: Feed, user: User) {
+  console.log(feed);
+  console.log(user);
 }

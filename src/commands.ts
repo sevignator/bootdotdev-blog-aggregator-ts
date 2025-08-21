@@ -6,6 +6,7 @@ import {
 } from '@/lib/db/queries/users';
 import { setUser, readConfig } from '@/config';
 import { fetchFeed } from '@/utils/rss';
+import { createFeed } from '@/lib/db/queries/feeds';
 
 export type CommandHandler = (
   cmdName: string,
@@ -58,12 +59,12 @@ export const resetHandler: CommandHandler = async function () {
 
 export const usersHandler: CommandHandler = async function () {
   const users = await getAllUsers();
-  const loggedInUser = readConfig().currentUserName;
+  const { currentUserName } = readConfig();
 
   for (const user of users) {
     console.log(
       `* ${user.name}`,
-      loggedInUser === user.name ? '(current)' : ''
+      currentUserName === user.name ? '(current)' : ''
     );
   }
 };
@@ -73,4 +74,15 @@ export const aggHandler: CommandHandler = async function (cmdName, ...args) {
   // const feed = await fetchFeed(feedURL);
   const feed = await fetchFeed('https://www.wagslane.dev/index.xml');
   https: console.log(feed);
+};
+
+export const addFeedHandler: CommandHandler = async function (
+  cmdName,
+  ...args
+) {
+  const [name, url] = args;
+  const { currentUserName } = readConfig();
+  const user = await getUser(currentUserName);
+
+  await createFeed(name, url, user.id);
 };

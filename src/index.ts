@@ -9,6 +9,7 @@ import {
   resetHandler,
   usersHandler,
   aggHandler,
+  addFeedHandler,
 } from '@/commands';
 
 async function main() {
@@ -26,6 +27,7 @@ async function main() {
   registerCommand(commandsRegistry, 'reset', resetHandler);
   registerCommand(commandsRegistry, 'users', usersHandler);
   registerCommand(commandsRegistry, 'agg', aggHandler);
+  registerCommand(commandsRegistry, 'addfeed', addFeedHandler);
 
   await runCommand(commandsRegistry, cmdName, ...args);
 
