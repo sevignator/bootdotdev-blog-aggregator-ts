@@ -4,15 +4,16 @@ import {
   runCommand,
 } from '@/utils/registry';
 import {
-  registerHandler,
-  loginHandler,
-  resetHandler,
-  usersHandler,
-  aggHandler,
+  type CommandHandler,
   addFeedHandler,
+  aggHandler,
   feedsHandler,
   followHandler,
   followingHandler,
+  loginHandler,
+  registerHandler,
+  resetHandler,
+  usersHandler,
 } from '@/commands';
 
 async function main() {
@@ -24,16 +25,55 @@ async function main() {
     process.exit(1);
   }
 
+  interface CommandEntry {
+    name: string;
+    handler: CommandHandler;
+  }
+
+  const commandsMap: CommandEntry[] = [
+    {
+      name: 'addfeed',
+      handler: addFeedHandler,
+    },
+    {
+      name: 'agg',
+      handler: aggHandler,
+    },
+    {
+      name: 'feeds',
+      handler: feedsHandler,
+    },
+    {
+      name: 'follow',
+      handler: followHandler,
+    },
+    {
+      name: 'following',
+      handler: followingHandler,
+    },
+    {
+      name: 'login',
+      handler: loginHandler,
+    },
+    {
+      name: 'register',
+      handler: registerHandler,
+    },
+
+    {
+      name: 'reset',
+      handler: resetHandler,
+    },
+    {
+      name: 'users',
+      handler: usersHandler,
+    },
+  ];
+
   // Add commands to the registry.
-  registerCommand(commandsRegistry, 'register', registerHandler);
-  registerCommand(commandsRegistry, 'login', loginHandler);
-  registerCommand(commandsRegistry, 'reset', resetHandler);
-  registerCommand(commandsRegistry, 'users', usersHandler);
-  registerCommand(commandsRegistry, 'agg', aggHandler);
-  registerCommand(commandsRegistry, 'addfeed', addFeedHandler);
-  registerCommand(commandsRegistry, 'feeds', feedsHandler);
-  registerCommand(commandsRegistry, 'follow', followHandler);
-  registerCommand(commandsRegistry, 'following', followingHandler);
+  for (const command of commandsMap) {
+    registerCommand(commandsRegistry, command.name, command.handler);
+  }
 
   await runCommand(commandsRegistry, cmdName, ...args);
 
