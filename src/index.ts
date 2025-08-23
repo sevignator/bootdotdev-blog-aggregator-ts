@@ -11,6 +11,8 @@ import {
   aggHandler,
   addFeedHandler,
   feedsHandler,
+  followHandler,
+  followingHandler,
 } from '@/commands';
 
 async function main() {
@@ -30,6 +32,8 @@ async function main() {
   registerCommand(commandsRegistry, 'agg', aggHandler);
   registerCommand(commandsRegistry, 'addfeed', addFeedHandler);
   registerCommand(commandsRegistry, 'feeds', feedsHandler);
+  registerCommand(commandsRegistry, 'follow', followHandler);
+  registerCommand(commandsRegistry, 'following', followingHandler);
 
   await runCommand(commandsRegistry, cmdName, ...args);
 

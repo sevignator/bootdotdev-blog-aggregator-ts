@@ -13,7 +13,7 @@ export async function getUserByName(name: string) {
   return result;
 }
 
-export async function getUserFromId(id: string) {
+export async function getUserById(id: string) {
   const [result] = await db.select().from(users).where(eq(users.id, id));
   return result;
 }

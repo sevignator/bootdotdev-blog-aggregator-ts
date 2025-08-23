@@ -1,13 +1,23 @@
+import { setUser, readConfig } from '@/config';
+import { fetchFeed } from '@/utils/rss';
+import { checkArgValidity } from '@/utils/registry';
 import {
   createUser,
   getUserByName,
   deleteAllUsers,
   getAllUsers,
-  getUserFromId,
+  getUserById,
 } from '@/lib/db/queries/users';
-import { setUser, readConfig } from '@/config';
-import { fetchFeed } from '@/utils/rss';
-import { createFeed, getFeeds } from '@/lib/db/queries/feeds';
+import {
+  createFeed,
+  getAllFeeds,
+  getFeedById,
+  getFeedByUrl,
+} from '@/lib/db/queries/feeds';
+import {
+  createFeedFollow,
+  getFeedFollowsByUser,
+} from './lib/db/queries/feedfollows';
 
 export type CommandHandler = (
   cmdName: string,
@@ -18,12 +28,9 @@ export const registerHandler: CommandHandler = async function (
   cmdName,
   ...args
 ) {
-  if (args.length === 0) {
-    console.log('Please provide a user name.');
-    process.exit(1);
-  }
-
   const [userName] = args;
+  checkArgValidity(userName !== undefined, 'username');
+
   const userData = await getUserByName(userName);
 
   if (userData) {
@@ -38,12 +45,9 @@ export const registerHandler: CommandHandler = async function (
 };
 
 export const loginHandler: CommandHandler = async function (cmdName, ...args) {
-  if (args.length === 0) {
-    console.log('Please provide a user name.');
-    process.exit(1);
-  }
-
   const [userName] = args;
+  checkArgValidity(userName !== undefined, 'username');
+
   const userData = await getUserByName(userName);
 
   if (!userData) {
@@ -72,8 +76,9 @@ export const usersHandler: CommandHandler = async function () {
 
 export const aggHandler: CommandHandler = async function (cmdName, ...args) {
   const [feedURL] = args;
-  // const feed = await fetchFeed(feedURL);
-  const feed = await fetchFeed('https://www.wagslane.dev/index.xml');
+  checkArgValidity(feedURL !== undefined, 'feedURL');
+
+  const feed = await fetchFeed(feedURL);
   console.log(feed);
 };
 
@@ -82,21 +87,60 @@ export const addFeedHandler: CommandHandler = async function (
   ...args
 ) {
   const [name, url] = args;
+  checkArgValidity(name !== undefined, 'name');
+  checkArgValidity(url !== undefined, 'url');
+
   const { currentUserName } = readConfig();
   const user = await getUserByName(currentUserName);
+  const feed = await createFeed(name, url, user.id);
+  await createFeedFollow(user.id, feed.id);
 
-  await createFeed(name, url, user.id);
+  console.log(
+    `The user "${currentUserName}" is now following the feed "${feed.name}"`
+  );
 };
 
 export const feedsHandler: CommandHandler = async function (cmdName, ...args) {
-  const feeds = await getFeeds();
+  const feeds = await getAllFeeds();
 
   for (const feed of feeds) {
-    const user = await getUserFromId(feed.userId);
+    const user = await getUserById(feed.userId);
 
     console.log('Name:', feed.name);
     console.log('URL:', feed.url);
     console.log('User:', user.name);
     console.log('---');
   }
+};
+
+export const followHandler: CommandHandler = async function (cmd, ...args) {
+  const [feedURL] = args;
+  checkArgValidity(feedURL !== undefined, 'feedURL');
+
+  const { currentUserName } = readConfig();
+  const feed = await getFeedByUrl(feedURL);
+  const user = await getUserByName(currentUserName);
+
+  await createFeedFollow(user.id, feed.id);
+
+  console.log(
+    `The user "${currentUserName}" is now following the feed "${feed.name}"`
+  );
+};
+
+export const followingHandler: CommandHandler = async function (cmd, ...args) {
+  const { currentUserName } = readConfig();
+  const user = await getUserByName(currentUserName);
+
+  const feedFollows = await getFeedFollowsByUser(user.id);
+
+  console.log(`The feeds followed by ${currentUserName} are:`);
+  console.log('');
+
+  for (const feedFollow of feedFollows) {
+    const feed = await getFeedById(feedFollow.feedId);
+    console.log(`- '${feed.name}'`);
+  }
+
+  console.log('');
 };

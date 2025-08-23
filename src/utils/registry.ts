@@ -21,3 +21,14 @@ export async function runCommand(
 ): Promise<void> {
   await registry[cmdName](cmdName, ...args);
 }
+
+export function checkArgValidity(
+  passingCondition: boolean,
+  argName: string
+): void {
+  if (!passingCondition) {
+    console.log(`Please provide a valid value for "${argName}".`);
+    console.log('');
+    process.exit(1);
+  }
+}
