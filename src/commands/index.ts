@@ -1,3 +1,5 @@
+import { User } from '@/lib/db/schema';
+
 export { addFeedHandler } from './addFeedHandler';
 export { aggHandler } from './aggHandler';
 export { feedsHandler } from './feedsHandler';
@@ -10,5 +12,11 @@ export { usersHandler } from './usersHandler';
 
 export type CommandHandler = (
   cmdName: string,
+  ...args: string[]
+) => Promise<void>;
+
+export type UserCommandHandler = (
+  cmdName: string,
+  user: User,
   ...args: string[]
 ) => Promise<void>;

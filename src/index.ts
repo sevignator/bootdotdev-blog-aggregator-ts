@@ -15,6 +15,7 @@ import {
   resetHandler,
   usersHandler,
 } from '@/commands';
+import { middlewareLoggedIn } from '@/middleware/middlewareLoggedIn';
 
 async function main() {
   const [cmdName, ...args] = process.argv.slice(2);
@@ -33,7 +34,7 @@ async function main() {
   const commandsMap: CommandEntry[] = [
     {
       name: 'addfeed',
-      handler: addFeedHandler,
+      handler: middlewareLoggedIn(addFeedHandler),
     },
     {
       name: 'agg',
@@ -45,11 +46,11 @@ async function main() {
     },
     {
       name: 'follow',
-      handler: followHandler,
+      handler: middlewareLoggedIn(followHandler),
     },
     {
       name: 'following',
-      handler: followingHandler,
+      handler: middlewareLoggedIn(followingHandler),
     },
     {
       name: 'login',

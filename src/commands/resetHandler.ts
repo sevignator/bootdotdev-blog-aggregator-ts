@@ -1,6 +1,5 @@
-import { deleteAllUsers, getAllUsers } from '@/lib/db/queries/users';
-import { CommandHandler } from '.';
-import { readConfig } from '@/config';
+import { type CommandHandler } from '.';
+import { deleteAllUsers } from '@/lib/db/queries/users';
 
 export const resetHandler: CommandHandler = async function () {
   await deleteAllUsers();
