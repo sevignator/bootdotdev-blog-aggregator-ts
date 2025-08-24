@@ -2,7 +2,7 @@
 
 Personal solution to the [Build a Blog Aggregator in TypeScript](https://www.boot.dev/courses/build-blog-aggregator-typescript) project from Boot.dev.
 
-This is a CLI program that allows users to fetch RSS feeds and store their content in a PostgreSQL database.
+This is a CLI program, named gator, that allows users to fetch RSS feeds and store their content in a PostgreSQL database.
 
 ## Set up
 
