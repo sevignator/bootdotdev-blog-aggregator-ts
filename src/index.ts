@@ -3,18 +3,17 @@ import {
   registerCommand,
   runCommand,
 } from '@/utils/registry';
-import {
-  type CommandHandler,
-  addFeedHandler,
-  aggHandler,
-  feedsHandler,
-  followHandler,
-  followingHandler,
-  loginHandler,
-  registerHandler,
-  resetHandler,
-  usersHandler,
-} from '@/commands';
+import { type CommandHandler } from '@/commands/types';
+import { handleAddFeed } from '@/commands/handleAddFeed';
+import { handleAgg } from '@/commands/handleAgg';
+import { handleFeeds } from '@/commands/handleFeeds';
+import { handleFollow } from '@/commands/handleFollow';
+import { handleFollowing } from '@/commands/handleFollowing';
+import { handleLogin } from '@/commands/handleLogin';
+import { handleRegister } from '@/commands/handleRegister';
+import { handleReset } from '@/commands/handleReset';
+import { handleUnfollow } from '@/commands/handleUnfollow';
+import { handleUsers } from '@/commands/handleUsers';
 import { middlewareLoggedIn } from '@/middleware/middlewareLoggedIn';
 
 async function main() {
@@ -34,40 +33,43 @@ async function main() {
   const commandsMap: CommandEntry[] = [
     {
       name: 'addfeed',
-      handler: middlewareLoggedIn(addFeedHandler),
+      handler: middlewareLoggedIn(handleAddFeed),
     },
     {
       name: 'agg',
-      handler: aggHandler,
+      handler: handleAgg,
     },
     {
       name: 'feeds',
-      handler: feedsHandler,
+      handler: handleFeeds,
     },
     {
       name: 'follow',
-      handler: middlewareLoggedIn(followHandler),
+      handler: middlewareLoggedIn(handleFollow),
     },
     {
       name: 'following',
-      handler: middlewareLoggedIn(followingHandler),
+      handler: middlewareLoggedIn(handleFollowing),
     },
     {
       name: 'login',
-      handler: loginHandler,
+      handler: handleLogin,
     },
     {
       name: 'register',
-      handler: registerHandler,
+      handler: handleRegister,
     },
-
     {
       name: 'reset',
-      handler: resetHandler,
+      handler: handleReset,
+    },
+    {
+      name: 'unfollow',
+      handler: middlewareLoggedIn(handleUnfollow),
     },
     {
       name: 'users',
-      handler: usersHandler,
+      handler: middlewareLoggedIn(handleUsers),
     },
   ];
 

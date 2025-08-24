@@ -1,9 +1,9 @@
-import { type UserCommandHandler } from '.';
+import { type UserCommandHandler } from './types';
 import { checkArgValidity } from '@/utils/registry';
-import { createFeedFollow } from '@/lib/db/queries/feedfollows';
+import { createFeedFollow } from '@/lib/db/queries/feedFollows';
 import { getFeedByUrl } from '@/lib/db/queries/feeds';
 
-export const followHandler: UserCommandHandler = async function (
+export const handleFollow: UserCommandHandler = async function (
   cmd,
   user,
   ...args
@@ -15,7 +15,5 @@ export const followHandler: UserCommandHandler = async function (
 
   await createFeedFollow(user.id, feed.id);
 
-  console.log(
-    `The user "${user.name}" is now following the feed "${feed.name}"`
-  );
+  console.log(`${user.name} is now following the feed "${feed.name}"`);
 };

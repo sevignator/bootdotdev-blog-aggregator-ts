@@ -9,6 +9,7 @@ import {
 
 export type User = typeof users.$inferSelect;
 export type Feed = typeof feeds.$inferSelect;
+export type FeedFollow = typeof feedFollows.$inferInsert;
 
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom().notNull(),

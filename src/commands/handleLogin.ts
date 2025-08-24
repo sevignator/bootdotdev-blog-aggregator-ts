@@ -1,9 +1,9 @@
-import { type CommandHandler } from '.';
+import { type CommandHandler } from './types';
 import { checkArgValidity } from '@/utils/registry';
 import { getUserByName } from '@/lib/db/queries/users';
 import { setUser } from '@/config';
 
-export const loginHandler: CommandHandler = async function (cmdName, ...args) {
+export const handleLogin: CommandHandler = async function (cmdName, ...args) {
   const [userName] = args;
   checkArgValidity(userName !== undefined, 'username');
 

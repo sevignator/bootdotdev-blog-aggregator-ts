@@ -1,4 +1,4 @@
-import { type CommandHandler, type UserCommandHandler } from '@/commands';
+import { type CommandHandler, type UserCommandHandler } from '@/commands/types';
 import { readConfig } from '@/config';
 import { getUserByName } from '@/lib/db/queries/users';
 

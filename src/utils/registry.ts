@@ -1,4 +1,4 @@
-import { type CommandHandler } from '@/commands';
+import { type CommandHandler } from '@/commands/types';
 
 export type CommandsRegistry = Record<string, CommandHandler>;
 
