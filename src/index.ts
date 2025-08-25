@@ -79,8 +79,6 @@ async function main() {
   }
 
   await runCommand(commandsRegistry, cmdName, ...args);
-
-  process.exit(0);
 }
 
 await main();
