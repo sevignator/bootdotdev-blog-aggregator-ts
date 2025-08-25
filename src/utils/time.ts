@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 export function parseDuration(durationStr: string): number {
   const regex = /^(\d+)(ms|s|m|h)$/;
   const match = durationStr.match(regex);
@@ -27,4 +29,8 @@ export function parseDuration(durationStr: string): number {
       process.exit(1);
     }
   }
+}
+
+export function formatDate(date: Date) {
+  return format(date, 'dd/MM/yyyy');
 }

@@ -5,11 +5,11 @@ import { parseDuration } from '@/utils/time';
 
 export const handleAgg: CommandHandler = async function (cmdName, ...args) {
   const [timeBetweenReqs] = args;
-  checkArgValidity(timeBetweenReqs !== undefined, 'feedURL');
+  checkArgValidity(timeBetweenReqs !== undefined, 'timeBetweenReqs');
 
   const duration = parseDuration(timeBetweenReqs);
 
-  console.log(`Collecting feeds every ${timeBetweenReqs}.`);
+  console.log(`Collecting feeds every ${timeBetweenReqs}.\n`);
 
   // Initial scrape that occurs immediately.
   await scrapeFeeds();

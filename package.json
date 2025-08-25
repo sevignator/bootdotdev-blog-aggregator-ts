@@ -10,7 +10,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate"
   },
-  "keywords": [ ],
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.15.0",
@@ -22,6 +22,7 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
+    "date-fns": "^4.1.0",
     "drizzle-orm": "^0.44.4",
     "fast-xml-parser": "^5.2.5",
     "postgres": "^3.4.7"

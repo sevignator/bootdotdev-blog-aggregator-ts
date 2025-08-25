@@ -81,7 +81,11 @@ export async function scrapeFeeds() {
 
   await updateFeedFetchDate(nextFeed.id);
 
+  console.log(`Posts from ${nextFeed.name}:\n`);
+
   for (const item of feedData.item) {
     console.log(`- ${item.title}`);
   }
+
+  console.log('');
 }
