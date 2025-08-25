@@ -70,3 +70,27 @@ export const feedFollows = pgTable(
     unique('user_feed_unique').on(table.userId, table.feedId),
   ]
 );
+
+export const posts = pgTable(
+  'posts',
+  {
+    id: uuid('id').primaryKey().defaultRandom().notNull(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+    updatedAt: timestamp('updated_at')
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+    title: text('title').notNull(),
+    url: text('url').notNull(),
+    description: text('description').notNull(),
+    publishedAt: timestamp('published_at').notNull(),
+    feedId: uuid('feed_id').notNull(),
+  },
+  (table) => [
+    foreignKey({
+      name: 'feed_id_fk',
+      columns: [table.feedId],
+      foreignColumns: [feeds.id],
+    }).onDelete('cascade'),
+  ]
+);
