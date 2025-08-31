@@ -15,6 +15,7 @@ import { handleReset } from '@/commands/handleReset';
 import { handleUnfollow } from '@/commands/handleUnfollow';
 import { handleUsers } from '@/commands/handleUsers';
 import { middlewareLoggedIn } from '@/middleware/middlewareLoggedIn';
+import { handleBrowse } from './commands/handleBrowse';
 
 async function main() {
   const [cmdName, ...args] = process.argv.slice(2);
@@ -38,6 +39,10 @@ async function main() {
     {
       name: 'agg',
       handler: handleAgg,
+    },
+    {
+      name: 'browse',
+      handler: middlewareLoggedIn(handleBrowse),
     },
     {
       name: 'feeds',

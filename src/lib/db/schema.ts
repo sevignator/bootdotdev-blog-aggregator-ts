@@ -9,7 +9,8 @@ import {
 
 export type User = typeof users.$inferSelect;
 export type Feed = typeof feeds.$inferSelect;
-export type FeedFollow = typeof feedFollows.$inferInsert;
+export type FeedFollow = typeof feedFollows.$inferSelect;
+export type Post = typeof posts.$inferInsert;
 
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom().notNull(),
@@ -82,7 +83,7 @@ export const posts = pgTable(
       .$onUpdate(() => new Date()),
     title: text('title').notNull(),
     url: text('url').notNull(),
-    description: text('description').notNull(),
+    description: text('description'),
     publishedAt: timestamp('published_at').notNull(),
     feedId: uuid('feed_id').notNull(),
   },

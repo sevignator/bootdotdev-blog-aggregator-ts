@@ -5,6 +5,7 @@ import {
   getNextFeedToFetch,
   updateFeedFetchDate,
 } from '@/lib/db/queries/feeds';
+import { createPost } from '@/lib/db/queries/posts';
 
 export type RSSFeed = {
   channel: {
@@ -81,11 +82,14 @@ export async function scrapeFeeds() {
 
   await updateFeedFetchDate(nextFeed.id);
 
-  console.log(`Posts from ${nextFeed.name}:\n`);
-
-  for (const item of feedData.item) {
-    console.log(`- ${item.title}`);
+  for (const post of feedData.item) {
+    const { title, link, description, pubDate } = post;
+    await createPost({
+      title,
+      url: link,
+      description,
+      publishedAt: new Date(pubDate),
+      feedId: nextFeed.id,
+    });
   }
-
-  console.log('');
 }
