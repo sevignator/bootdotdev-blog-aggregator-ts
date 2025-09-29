@@ -5,15 +5,26 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "tsx ./src/index.ts"
+    "start": "tsx ./src/index.ts",
+    "test": "vitest",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@9.1.2+sha256.19c17528f9ca20bd442e4ca42f00f1b9808a9cb419383cd04ba32ef19322aba7",
+  "packageManager": "pnpm@10.15.0",
   "devDependencies": {
     "@types/node": "^24.1.0",
+    "drizzle-kit": "^0.31.4",
     "tsx": "^4.20.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "drizzle-orm": "^0.44.4",
+    "fast-xml-parser": "^5.2.5",
+    "postgres": "^3.4.7"
   }
 }
